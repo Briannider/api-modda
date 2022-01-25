@@ -10,6 +10,7 @@ app.use(express.json());
 app.get('/products', (req, res) => {
     Product.find()
         .then((result) => {
+            res.set('Access-Control-Allow-Origin', '*');
             res.send(result)
         })
         .catch(err => res.status(404).send(err));
