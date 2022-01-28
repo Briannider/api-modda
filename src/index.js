@@ -16,11 +16,21 @@ app.get('/products', (req, res) => {
         .catch(err => res.status(404).send(err));
 })
 
+app.get('/products/:id', (req, res) => {
+    const id = req.params.id
+    Product.findById(id)
+    .then((result) => {
+        res.set('Access-Control-Allow-Origin', '*')
+        res.send(result)
+    })
+    .catch(err => res.status(404).send(err));
+})
 // Create -- Agregar productos
 app.post('/product', (req, res) => {
     const product = new Product(req.body)
     product.save()
         .then(() => {
+            res.set('Access-Control-Allow-Origin', '*')
             res.status(201).send(product);
         })
         .catch((err) => {
