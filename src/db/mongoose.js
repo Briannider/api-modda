@@ -1,7 +1,29 @@
-const mongoose = require('mongoose');
-const uri = "mongodb+srv://briannider:10203040@cluster0.xxr1z.mongodb.net/Modda?retryWrites=true&w=majority";
-mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
+require("dotenv").config();
+const { MongoClient, ServerApiVersion } = require("mongodb");
+
+let uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_URI}`;
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
 });
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
+// 
