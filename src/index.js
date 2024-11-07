@@ -1,7 +1,8 @@
 require('./db/mongoose');
+require("dotenv").config();
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 const Product = require('./model/products');
 
 app.use(express.json());
