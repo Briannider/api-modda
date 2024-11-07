@@ -7,39 +7,52 @@ const Product = require('./model/products');
 app.use(express.json());
 
 // Read-- Mostrar todos los productos
-app.get('/products', (req, res) => {
-    Product.find()
-        .then((result) => {
-            res.set('Access-Control-Allow-Origin', '*');
-            res.send(result)
-        })
-        .catch(err => res.status(404).send(err));
+app.get('/products', async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.set('Access-Control-Allow-Origin', '*');
+        res.send(products);
+    } catch (err) {
+        res.status(404).send(err);
+    }
 })
 
-app.get('/products/:id', (req, res) => {
-    const id = req.params.id
-    Product.findById(id)
-    .then((result) => {
-        res.set('Access-Control-Allow-Origin', '*')
-        res.send(result)
-    })
-    .catch(err => res.status(404).send(err));
+app.get('/products/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const product = await Product.findById(id);
+        res.set('Access-Control-Allow-Origin', '*');
+        res.send(product);
+    } catch (err) {
+        res.status(404).send(err);
+    }
 })
+
 // Create -- Agregar productos
-app.post('/product', (req, res) => {
-    const product = new Product(req.body)
-    product.save()
-        .then(() => {
-            res.set('Access-Control-Allow-Origin', '*')
-            res.status(201).send(product);
-        })
-        .catch((err) => {
-            res.status(400).send(err);
-        });
+app.post('/product', async (req, res) => {
+    try {
+        const product = new Product(req.body);
+        const newProduct = await product.save();
+        res.set('Access-Control-Allow-Origin', '*');
+        res.status(201).send(newProduct);
+    } catch (err) {
+        res.status(400).send(err);
+    }
 });
 
-//  Delete -- Borrar un producto
+// Delete -- Borrar un producto
+app.delete('/product/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const deletedProduct = await Product.findByIdAndDelete(id);
+        res.set('Access-Control-Allow-Origin', '*');
+        res.send(deletedProduct);
+    } catch (err) {
+        res.status(404).send(err);
+    }
+});
 
 app.listen(port, () => {
     console.log(`Funcionando en http://localhost:${port}`);
 });
+
