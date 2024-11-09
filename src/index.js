@@ -1,14 +1,12 @@
-require('./db/mongoose');
-require("dotenv").config();
 const express = require('express');
 const app = express();
-const port = process.env.PORT;
+const { PORT, MONGODB_URI } = process.env;
+const mongoose = require('./db/mongoose');
 const Product = require('./model/products');
 
 app.use(express.json());
 
-// Read-- Mostrar todos los productos
-app.get('/products', async (req, res) => {
+const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find();
         res.set('Access-Control-Allow-Origin', '*');
@@ -16,9 +14,9 @@ app.get('/products', async (req, res) => {
     } catch (err) {
         res.status(404).send(err);
     }
-})
+}
 
-app.get('/products/:id', async (req, res) => {
+const getProductById = async (req, res) => {
     try {
         const id = req.params.id;
         const product = await Product.findById(id);
@@ -27,10 +25,9 @@ app.get('/products/:id', async (req, res) => {
     } catch (err) {
         res.status(404).send(err);
     }
-})
+}
 
-// Create -- Agregar productos
-app.post('/product', async (req, res) => {
+const addProduct = async (req, res) => {
     try {
         const product = new Product(req.body);
         const newProduct = await product.save();
@@ -39,10 +36,9 @@ app.post('/product', async (req, res) => {
     } catch (err) {
         res.status(400).send(err);
     }
-});
+}
 
-// Delete -- Borrar un producto
-app.delete('/product/:id', async (req, res) => {
+const deleteProductById = async (req, res) => {
     try {
         const id = req.params.id;
         const deletedProduct = await Product.findByIdAndDelete(id);
@@ -51,9 +47,15 @@ app.delete('/product/:id', async (req, res) => {
     } catch (err) {
         res.status(404).send(err);
     }
+}
+
+app.get('/products', getAllProducts);
+app.get('/products/:id', getProductById);
+app.post('/product', addProduct);
+app.delete('/product/:id', deleteProductById);
+
+app.listen(PORT, () => {
+    console.log(`Funcionando en http://localhost:${PORT}`);
 });
 
-app.listen(port, () => {
-    console.log(`Funcionando en http://localhost:${port}`);
-});
 
