@@ -8,8 +8,7 @@ const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PAS
 mongoose
   .connect(uri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverApi: ServerApiVersion.v1,
+    useUnifiedTopology: true
   })
   .then(() => {
     console.log("Connected to MongoDB successfully!");
