@@ -28,7 +28,7 @@ This API provides a platform for managing and accessing a wide range of fashion 
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/your-repo/fashion-api.git
+    git clone https://github.com/Briannider/api-modda
     ```
 2. **Install dependencies**:
     ```bash
