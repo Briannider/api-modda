@@ -84,6 +84,23 @@ All responses follow this JSON format:
 ```json
 {
   "success": true,
-  "data": {},
+  "data": {
+    name : {
+        type: String,
+        required: true        
+        },
+    description: {
+        type: String,
+        required: true
+    },
+    img: { 
+        type: String,
+        required: true
+    },
+    alt: {
+        type: String,
+        required: true
+    }
+},
   "message": "Request was successful."
 }
