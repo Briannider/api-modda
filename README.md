@@ -1,6 +1,6 @@
 # Modda API
 
-This API provides a platform for managing and accessing a wide range of fashion products (in process, including jackets, scarves, boots, hoodies, and beanies. Designed to work seamlessly with a web application, this API allows for robust handling of product data, categories, and search functionalities for a smooth and engaging user experience.
+This API provides a platform for managing and accessing a wide range of fashion products (in process), including jackets, scarves, boots, hoodies, and beanies. Designed to work seamlessly with a web application, this API allows for robust handling of product data, categories, and search functionalities for a smooth and engaging user experience.
 
 ## Table of Contents
 - [Features](#features)
